@@ -9,9 +9,41 @@
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:HackaGlobal" x:Key="LocalizedStrings"/>
 
-        <DataTemplate x:Key="ListBoxItemTemplate">
-            <TextBlock Foreground="#FFFFFF" FontSize="40" FontFamily="Segoe UI"
-                       Margin="0, 0, 0, 20" Text="{Binding BindsDirectlyToSource=True}" />
+        <DataTemplate x:Key="LocationButtonTemplate">
+            <Grid Margin="10, 10, 0, 15">
+                <Border Background="#EEEEEE" BorderBrush="#AAAAAA" BorderThickness="1" CornerRadius="8">
+                    <Grid Width="432" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Foreground="Black" FontSize="28" FontFamily="Segoe UI Light" Text="{Binding Name}" Margin="20, 20, 8, 20" TextWrapping="Wrap" />
+                        <Image Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Source="Assets/Button/ArrowGray.png" Width="13" Height="21" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EventButtonTemplate">
+            <Grid Margin="10, 10, 0, 15">
+                <Border Background="#EEEEEE" BorderBrush="#AAAAAA" BorderThickness="1" CornerRadius="8">
+                    <Grid Width="432">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="28" Foreground="Black" Margin="8, 0, 8, 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Location}" FontSize="20" Foreground="#777777" Margin="8, 0, 8, 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="2" Text="{Binding Start}" FontSize="20" Foreground="#777777" Margin="8, 0, 8, 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="3" Text="{Binding End}" FontSize="20" Foreground="#777777" Margin="8, 0, 8, 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="4" Text="{Binding Description}" FontSize="20" Foreground="Black" Margin="8, 0, 8, 8" TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+            </Grid>
         </DataTemplate>
     </Application.Resources>
 

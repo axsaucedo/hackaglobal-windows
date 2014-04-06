@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace HackaGlobal
 {
-    public enum CurrentlyViewing { Countries, Cities, Events, EventDetails }
+    public enum CurrentlyViewing { Countries, Cities, Events }
 
     static class DataManager
     {
@@ -16,14 +16,13 @@ namespace HackaGlobal
 
         public static MainPage MainPage;
 
-        public static string RootUrl { get { return "http://22ba183c.ngrok.com/api/"; } }
+        public static string RootUrl { get { return Resources.AppResources.RootUrl; } }
         public static string DataUrl { get { return RootUrl + "data/"; } }
         public static string LocationsUrl { get { return RootUrl + "country/"; } }
 
-        public static LoadedCountries CountryList { get; private set; }
-        public static LoadedCities CityList { get; private set; }
-        public static LoadedEvents EventList { get; private set; }
-        public static Event SelectedEvent { get; private set; }
+        public static List<string> CountryList { get; private set; }
+        public static List<string> CityList { get; private set; }
+        public static List<Event> EventList { get; private set; }
 
         public static int SelectedCountryIndex { get; set; }
         public static int SelectedCityIndex { get; set; }
@@ -31,13 +30,45 @@ namespace HackaGlobal
 
         public static CurrentlyViewing CurrentlyViewing { get; private set; }
 
-        static DataManager()
+        public static List<EventButtonData> ParseEventListToDataList(List<Event> events)
         {
-            webClient = new WebClient();
-            webClient.DownloadStringCompleted += webClient_DownloadStringCompleted;
+            var buttonlist = new List<EventButtonData>();
+
+            events.ForEach(e =>
+            {
+                var data = new EventButtonData()
+                {
+                    Name = e.name,
+                    Location = e.address + ", " + e.city + ", " + e.country,
+                    Start = "Starts at " + e.start.Replace("T", " from "),
+                    End = "Ends on " + e.start.Replace("T", " at "),
+                    Description = (e.description.Length > 160)? e.description.Substring(0, 160) + "..." : e.description
+                };
+
+                buttonlist.Add(data);
+            });
+
+            return buttonlist;
         }
 
-        public static void UpdateList(ListBox targetList, int viewId)
+        public static List<LocationButtonData> ParseLocationListToDataList(List<string> locations)
+        {
+            var buttonlist = new List<LocationButtonData>();
+
+            locations.ForEach(location =>
+            {
+                var data = new LocationButtonData()
+                {
+                    Name = location
+                };
+
+                buttonlist.Add(data);
+            });
+
+            return buttonlist;
+        }
+
+        public static void UpdateList(ListBox targetList, int selectionIndex, int viewId)
         {
             targetListBox = targetList;
 
@@ -52,23 +83,19 @@ namespace HackaGlobal
 
                 case 1:
                     CurrentlyViewing = CurrentlyViewing.Cities;
-                    if (targetListBox.SelectedIndex != -1) SelectedCountryIndex = targetListBox.SelectedIndex;
-                    url = LocationsUrl + CountryList.countries[SelectedCountryIndex];
+                    if (selectionIndex != -1) SelectedCountryIndex = selectionIndex;
+                    url = LocationsUrl + CountryList[SelectedCountryIndex];
                     break;
 
                 case 2:
                     CurrentlyViewing = CurrentlyViewing.Events;
-                    if (targetListBox.SelectedIndex != -1) SelectedCityIndex = targetListBox.SelectedIndex;
-                    url = DataUrl + CountryList.countries[SelectedCountryIndex] + '/' + CityList.cities[SelectedCityIndex];
-                    break;
-
-                case 3:
-                    CurrentlyViewing = CurrentlyViewing.EventDetails;
-                    if (targetListBox.SelectedIndex != -1) SelectedEventIndex = targetListBox.SelectedIndex;
-                    url = DataUrl + CountryList.countries[SelectedCountryIndex] + '/' + CityList.cities[SelectedCityIndex] + '/' + EventList.events[SelectedEventIndex];
+                    if (selectionIndex != -1) SelectedCityIndex = selectionIndex;
+                    url = DataUrl + CountryList[SelectedCountryIndex] + '/' + CityList[SelectedCityIndex];
                     break;
             }
 
+            webClient = new WebClient();
+            webClient.DownloadStringCompleted += webClient_DownloadStringCompleted;
             webClient.DownloadStringAsync(new Uri(url));
         }
 
@@ -81,21 +108,18 @@ namespace HackaGlobal
                     switch (CurrentlyViewing)
                     {
                         case CurrentlyViewing.Countries:
-                            CountryList = JsonConvert.DeserializeObject<LoadedCountries>(e.Result);
-                            targetListBox.ItemsSource = CountryList.ToStringList();
+                            CountryList = JsonConvert.DeserializeObject<List<string>>(e.Result);
+                            targetListBox.ItemsSource = ParseLocationListToDataList(CountryList);
                             break;
 
                         case CurrentlyViewing.Cities:
-                            CityList = JsonConvert.DeserializeObject<LoadedCities>(e.Result);
-                            targetListBox.ItemsSource = CityList.ToStringList();
+                            CityList = JsonConvert.DeserializeObject<List<string>>(e.Result);
+                            targetListBox.ItemsSource = ParseLocationListToDataList(CityList);
                             break;
 
                         case CurrentlyViewing.Events:
-                            EventList = JsonConvert.DeserializeObject<LoadedEvents>(e.Result);
-                            targetListBox.ItemsSource = EventList.ToStringList();
-                            break;
-
-                        case CurrentlyViewing.EventDetails:
+                            EventList = JsonConvert.DeserializeObject<List<Event>>(e.Result);
+                            targetListBox.ItemsSource = ParseEventListToDataList(EventList);
                             break;
                     }
                 }

@@ -94,10 +94,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataManager.cs" />
-    <Compile Include="JSON Objects\LoadedEvents.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="ExceptionManager.cs" />
-    <Compile Include="JSON Objects\LoadedCities.cs" />
-    <Compile Include="JSON Objects\LoadedCountries.cs" />
+    <Compile Include="ListTemplates\EventButtonData.cs" />
+    <Compile Include="ListTemplates\LocationButtonData.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -127,25 +127,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\Background\1.jpg" />
+    <Content Include="Assets\Button\ArrowGray.png" />
+    <Content Include="Assets\Header\logo_globe.png" />
+    <Content Include="Assets\Header\logo_text.png" />
+    <Content Include="Assets\Tiles\Medium.png" />
+    <Content Include="Assets\Tiles\Small.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">

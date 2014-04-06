@@ -1,0 +1,16 @@
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\Assets\ApplicationIcon.png
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\HackaGlobal.dll
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\HackaGlobal.pdb
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\AppManifest.xaml
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\Properties\WMAppManifest.xml
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\HackaGlobal_Release_AnyCPU.xap
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\Newtonsoft.Json.dll
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\Bin\Release\Newtonsoft.Json.xml
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\App.g.cs
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\MainPage.g.cs
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\HackaGlobal.g.resources
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\HackaGlobal.Resources.AppResources.resources
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\HackaGlobal.csproj.GenerateResource.Cache
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\HackaGlobal.dll
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\HackaGlobal.pdb
+D:\Programming\Windows Phone Projects\HackaGlobal\HackaGlobal\obj\Release\XapCacheFile.xml

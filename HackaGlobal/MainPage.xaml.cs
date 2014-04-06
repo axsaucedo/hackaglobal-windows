@@ -5,12 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 
 namespace HackaGlobal
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private bool isInitializing;
+        private int selectionIndex;
         private int view;
 
         public int View
@@ -29,47 +30,48 @@ namespace HackaGlobal
 
         public void Initialize()
         {
+            TextListPanel.Visibility = Visibility.Collapsed;
+            EventPanel.Visibility = Visibility.Collapsed;
+            LoadingPanel.Visibility = Visibility.Visible;
+
             switch (View)
             {
                 case 0:
-                    ListPanel.Visibility = Visibility.Visible;
-                    EventPanel.Visibility = Visibility.Collapsed;
-                    DataManager.UpdateList(ListBox, View);
+                    DataManager.UpdateList(LocationList, selectionIndex, View);
                     break;
 
                 case 1:
-                    ListPanel.Visibility = Visibility.Visible;
-                    EventPanel.Visibility = Visibility.Collapsed;
-                    DataManager.UpdateList(ListBox, View);
+                    DataManager.UpdateList(LocationList, selectionIndex, View);
                     break;
 
                 case 2:
-                    ListPanel.Visibility = Visibility.Visible;
-                    EventPanel.Visibility = Visibility.Collapsed;
-                    DataManager.UpdateList(ListBox, View);
-                    break;
-                
-                case 3:
-                    ListPanel.Visibility = Visibility.Collapsed;
-                    EventPanel.Visibility = Visibility.Visible;
-
-                    // Loads the event.
-
+                    DataManager.UpdateList(EventList, selectionIndex, View);
                     break;
             }
+
+            selectionIndex = -1;
         }
 
         public void FinishInitialization()
         {
-            isInitializing = false;
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!isInitializing)
+            LoadingPanel.Visibility = Visibility.Collapsed;
+            
+            switch (View)
             {
-                isInitializing = true;
-                View++;
+                case 0:
+                    TextListPanel.Visibility = Visibility.Visible;
+                    EventPanel.Visibility = Visibility.Collapsed;
+                    break;
+
+                case 1:
+                    TextListPanel.Visibility = Visibility.Visible;
+                    EventPanel.Visibility = Visibility.Collapsed;
+                    break;
+
+                case 2:
+                    TextListPanel.Visibility = Visibility.Collapsed;
+                    EventPanel.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -79,6 +81,39 @@ namespace HackaGlobal
             {
                 View--;
                 e.Cancel = true;
+            }
+        }
+
+        private void LocationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (selectionIndex == -1 && LocationList.SelectedIndex != -1)
+            {
+                selectionIndex = LocationList.SelectedIndex;
+                if (View < 2) View++;
+                selectionIndex = -1;
+            }
+        }
+
+        private void EventList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EventList.SelectedIndex != -1)
+            {
+                var website = DataManager.EventList[EventList.SelectedIndex].website;
+
+                if (website != "")
+                {
+                    WebBrowserTask webBrowserTask = new WebBrowserTask();
+                    webBrowserTask.Uri = new Uri(website, UriKind.Absolute);
+
+                    try { webBrowserTask.Show(); }
+                    catch { MessageBox.Show("Could not launch website."); }
+                }
+                else
+                {
+                    MessageBox.Show("No website has been specified for this event.");
+                }
+
+                EventList.SelectedIndex = -1;
             }
         }
     }
