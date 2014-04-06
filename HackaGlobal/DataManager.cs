@@ -41,7 +41,7 @@ namespace HackaGlobal
                     Name = e.name,
                     Location = e.address + ", " + e.city + ", " + e.country,
                     Start = "Starts at " + e.start.Replace("T", " from "),
-                    End = "Ends on " + e.start.Replace("T", " at "),
+                    End = "Ends on " + e.end.Replace("T", " at "),
                     Description = (e.description.Length > 160)? e.description.Substring(0, 160) + "..." : e.description
                 };
 
