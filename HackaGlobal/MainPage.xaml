@@ -13,23 +13,34 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Minimized" ForegroundColor="#000000" BackgroundColor="#EEEEEE" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
+            
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Refresh" Click="ApplicationBarRefresh_Click" />
+            </shell:ApplicationBar.MenuItems>
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    
     <Grid x:Name="BackgroundLayoutRoot">
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/Background/1.jpg"/>
         </Grid.Background>
-        <Grid x:Name="ForegroundLayoutRoot" Margin="12, 12, 12, 12">
+        <Grid x:Name="ForegroundLayoutRoot" Margin="12, 12, 12, 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="HeaderPanel" Background="#00FFFFFF">
+            <Grid x:Name="HeaderPanel">
                 <StackPanel Orientation="Horizontal" Height="100" Grid.Row="0" HorizontalAlignment="Center">
                     <Image Source="Assets/Header/logo_globe.png" Height="50" Margin="0, 0, 0, 0" />
                     <Image Source="Assets/Header/logo_text.png" Height="45" Margin="20, 0, 0, 0" />
                 </StackPanel>
             </Grid>
 
-            <Grid x:Name="ContentPanel" Grid.Row="1" Background="#00FFFFFF">
+            <Grid x:Name="ContentPanel" Grid.Row="1">
                 <Grid x:Name="TextListPanel" Visibility="Collapsed">
                     <ListBox x:Name="LocationList" ItemTemplate="{StaticResource LocationButtonTemplate}" SelectionChanged="LocationList_SelectionChanged" />
                 </Grid>

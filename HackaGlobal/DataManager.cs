@@ -124,9 +124,9 @@ namespace HackaGlobal
                     }
                 }
             }
-            catch (Exception x)
+            catch
             {
-                ExceptionManager.Log(x);
+                ExceptionManager.Log("Could not load all the results. Please try again.");
             }
             finally
             {

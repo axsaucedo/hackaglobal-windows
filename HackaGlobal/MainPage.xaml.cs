@@ -84,6 +84,7 @@ namespace HackaGlobal
             }
         }
 
+        #region Events
         private void LocationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (selectionIndex == -1 && LocationList.SelectedIndex != -1)
@@ -116,5 +117,11 @@ namespace HackaGlobal
                 EventList.SelectedIndex = -1;
             }
         }
+
+        private void ApplicationBarRefresh_Click(object sender, EventArgs e)
+        {
+            Initialize();
+        }
+        #endregion
     }
 }
